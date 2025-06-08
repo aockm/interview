@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'QuestionWeight.dart';
+
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
@@ -36,7 +38,7 @@ class _HomepageState extends State<Homepage> with SingleTickerProviderStateMixin
         body:  LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
-              padding: EdgeInsetsGeometry.only(left:10.0,right: 10.0),
+              padding: EdgeInsetsGeometry.only(left:5.0,right: 5.0),
               child: ConstrainedBox(
                 constraints: BoxConstraints(minHeight: constraints.minHeight),
                 child: Column(
@@ -44,7 +46,7 @@ class _HomepageState extends State<Homepage> with SingleTickerProviderStateMixin
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: List.generate(
                     questions.length,
-                        (index) => ItemWidget(text: 'Item $index'),
+                        (index) => QuestionCard(text: questions[index]['question'] as String),
                   ),
                 ),
               )
