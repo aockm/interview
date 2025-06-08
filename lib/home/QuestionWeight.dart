@@ -3,13 +3,17 @@
 import 'package:flutter/material.dart';
 import 'package:interview/comment/entity/QuestionEntity.dart';
 
+import '../components/recording_bottom_sheet.dart';
+import 'RecordPage.dart';
+
 
 class QuestionCard extends StatelessWidget {
   // final Question question;
-  String? text;
+  final int id;
+  final String text;
   final bool isAnswered;
 
-  QuestionCard({super.key, this.text, this.isAnswered = false});
+  const QuestionCard({super.key, required this.text, this.isAnswered = false, required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -92,9 +96,7 @@ class QuestionCard extends StatelessWidget {
                           backgroundColor: Colors.blue,
                           padding: EdgeInsets.all(12),
                         ),
-                        onPressed: () async{
-                          final answer = await sep
-                        },
+                        onPressed: () => showVoiceRecordingSheet(context,text)
                       ),
                     ),
 
@@ -127,3 +129,5 @@ class QuestionCard extends StatelessWidget {
     );
   }
 }
+
+

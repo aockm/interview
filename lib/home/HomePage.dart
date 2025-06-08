@@ -46,7 +46,8 @@ class _HomepageState extends State<Homepage> with SingleTickerProviderStateMixin
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: List.generate(
                     questions.length,
-                        (index) => QuestionCard(text: questions[index]['question'] as String),
+                        (index) =>QuestionCard(text: questions[index]['question'] as String,id: questions[index]['id'] as int),
+
                   ),
                 ),
               )

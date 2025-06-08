@@ -37,6 +37,7 @@ dependencies:
   speech_to_text: ^7.0.0
   shared_preferences: ^2.2.2
   get: 5.0.0-release-candidate-9.3.2
+  siri_wave: ^2.3.0
 
 dev_dependencies:
   flutter_test:
