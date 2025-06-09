@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:interview/comment/entity/QuestionEntity.dart';
+import 'package:interview/comment/entity/question_entity.dart';
 
 import '../components/recording_bottom_sheet.dart';
 import 'RecordPage.dart';
