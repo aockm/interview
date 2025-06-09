@@ -1,4 +1,7 @@
 // services/audio_service.dart
+import 'dart:io';
+import 'dart:math';
+
 import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
@@ -20,16 +23,22 @@ class AudioRecorderService {
   }
   Future<bool> _checkPermissions() async {
     final micStatus = await Permission.microphone.status;
-    final storageStatus = await Permission.storage.status;
+    final storageStatus = await Permission.manageExternalStorage.status;
     logger.i("micStatus:$micStatus storageStatus$storageStatus");
-    if (!micStatus.isGranted || !storageStatus.isGranted) {
-      final results = await [
-        Permission.microphone,
-        Permission.storage,
-      ].request();
+    if (Platform.isAndroid) {
+      if (!micStatus.isGranted || !storageStatus.isGranted) {
 
-      return results[Permission.microphone]?.isGranted == true &&
-          results[Permission.storage]?.isGranted == true;
+        final results = await [
+          Permission.microphone,
+          Permission.manageExternalStorage,
+        ].request();
+        PermissionStatus storageRes = await Permission.manageExternalStorage.request();
+        logger.i("storageRes：$storageRes");
+        return results[Permission.microphone]?.isGranted == true &&
+            results[Permission.storage]?.isGranted == true;
+      }
+    }else{
+      logger.i("不是android");
     }
     return true;
   }
@@ -44,11 +53,17 @@ class AudioRecorderService {
       }
 
       final directory = await getApplicationDocumentsDirectory();
+      final externalStorageDirectory = await getExternalStorageDirectory();
+      final applicationSupport = await getApplicationSupportDirectory();
       final path = '${directory.path}/${DateTime.now().millisecondsSinceEpoch}.m4a';
       // final path = await _generatePath();
 
       final config = await _getBestConfig();
-
+      logger.i("path:$path");
+      logger.i("getExternalStorageDirectory():${externalStorageDirectory?.path}");
+      logger.i("getExternalStorageDirectories():${applicationSupport.path}");
+      File file = File('/data/user/0/com.tockm.interview/app_flutter/1749486819597.m4a');
+      logger.i("file.exists():${file.existsSync()}");
       await _audioRecorder.start(
         RecordConfig(encoder: config.encoder,
           bitRate: config.bitRate,
